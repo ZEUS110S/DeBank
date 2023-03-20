@@ -19,32 +19,32 @@ function RandomTest(){
         var subject_name = "Chemistry"
         var difficulty = "easy"
 
-        // axios.get(
-        //     "api/Questions/SUBJECT_NAME,DIFFICULTY",
-        //     {
-        //         params: {
-        //             SUBJECT_NAME: subject_name,
-        //             DIFFICULTY: difficulty
-        //         },
-        //         headers:{
-        //             'Access-Control-Allow-Origin': true
-        //         },
-        //         proxy:{
-        //             protocol: 'https',
-        //             host: "0799-115-76-54-96.ap.ngrok.io",
-        //         }
-        //     }
-        // )
-        // .then((res) => console.log(res.data))
-        // .catch((err) => console.log(err))
-
-        fetch("https://0799-115-76-54-96.ap.ngrok.io/api/Questions",{
-            mode: "cors",
-            headers: {
-                'Access-Control-Allow-Origin': true
+        axios.get(
+            "http://localhost:5133/api/Questions/SUBJECT_NAME,DIFFICULTY",
+            {
+                params: {
+                    SUBJECT_NAME: subject_name,
+                    DIFFICULTY: difficulty
+                },
+                headers:{
+                    'Access-Control-Allow-Origin': true
+                },
+                proxy:{
+                    protocol: 'https',
+                    host: "0799-115-76-54-96.ap.ngrok.io",
+                }
             }
-        })
-        .then(res => res.json()).then(console.log);
+        )
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log(err))
+
+        // fetch("https://0799-115-76-54-96.ap.ngrok.io/api/Questions",{
+        //     mode: "cors",
+        //     headers: {
+        //         'Access-Control-Allow-Origin': true
+        //     }
+        // })
+        // .then(res => res.json()).then(console.log);
     }
 
     return (
