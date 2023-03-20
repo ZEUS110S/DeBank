@@ -3,7 +3,7 @@ import React from "react";
 import { Routes, Route, useNavigate, Navigate, Link } from "react-router-dom";
 import Header from './Header'
 import Footer from './Footer'
-// test
+
 import './App.css';
 import RandomTest from "./RandomTest";
 import RandomQuestion from "./RandomQuestion";
