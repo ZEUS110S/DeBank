@@ -12,10 +12,12 @@ namespace ServerApi.Models
         [Column(TypeName = "varchar20")]
         public string USERNAME { get; set; }
 
-        [Column(TypeName = "varchar20")]
+        // [Column(TypeName = "varchar20")]
+        [Column(TypeName = "varchar(max)")]
         public string PASSWORD { get; set; }
 
-        [Column(TypeName = "varchar50")]
+        // [Column(TypeName = "varchar50")]
+        [Column(TypeName = "nvarchar50")]
         public string FULLNAME { get; set; }
 
 
