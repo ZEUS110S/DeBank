@@ -23,26 +23,26 @@ function App(){
   const handleSubmit = (username, password) => {
     // setSuccess(success => !success)
     
-    // axios.post("https://3cbf-2402-800-639a-b391-c048-f291-3706-8fa9.ap.ngrok.io/api/Users/Login",
-    // {},
-    // {
-    //   params: {
-    //     USERNAME: username,
-    //     PASSWORD: password
-    //   }
-    // })
-    //   .then(res => {
-    //     console.log(res.data)
-    //     // set local storage
-    //     if(res.data.length === 0){
-    //       localStorage.setItem('isSuccess', JSON.stringify(false))
-    //     } else {
-    //       localStorage.setItem('isSuccess', JSON.stringify(true))
-    //       navigate("/home")
-    //     }
-    //   })
-    localStorage.setItem('isSuccess', JSON.stringify(true))
-    navigate("/home")
+    axios.post("http://localhost:5133/api/Users/Login",
+    {},
+    {
+      params: {
+        USERNAME: username,
+        PASSWORD: password
+      }
+    })
+      .then(res => {
+        console.log(res.data)
+        // set local storage
+        if(res.data.length === 0){
+          localStorage.setItem('isSuccess', JSON.stringify(false))
+        } else {
+          localStorage.setItem('isSuccess', JSON.stringify(true))
+          navigate("/home")
+        }
+      })
+    // localStorage.setItem('isSuccess', JSON.stringify(true))
+    // navigate("/home")
   }
 
   const openProfileBox = () => {
