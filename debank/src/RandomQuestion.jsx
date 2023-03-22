@@ -37,7 +37,7 @@ function RandomQuestion(props){
         var isCorrectAnswer = isCorrect;
 
         axios.post(
-            "https://3cbf-2402-800-639a-b391-c048-f291-3706-8fa9.ap.ngrok.io/api/Questions",
+            "http:/localhost:5133/api/Questions",
             {
                 "questioN_TITLE": questionTitle,
                 "subjecT_ID": selectedSubject,
