@@ -17,12 +17,9 @@ import { faXmark, faUser } from "@fortawesome/free-solid-svg-icons";
 import Profile from "./Profile";
 
 function App(){
-  // const [success, setSuccess] = useState(false)
   let navigate = useNavigate();
 
   const handleSubmit = (username, password) => {
-    // setSuccess(success => !success)
-    
     axios.post("http://localhost:5133/api/Users/Login",
     {},
     {
@@ -41,12 +38,9 @@ function App(){
           navigate("/home")
         }
       })
-    // localStorage.setItem('isSuccess', JSON.stringify(true))
-    // navigate("/home")
   }
 
   const openProfileBox = () => {
-    // setSuccess(success => !success)
     document.querySelector('#profile-div').style.display = 'block'
     if(document.querySelector('#profile-modal').classList.contains("reversed")){
       document.querySelector('#profile-modal').classList.remove('reversed')
@@ -54,8 +48,6 @@ function App(){
     } else {
       document.querySelector('#profile-modal').classList.add('animated')
     }
-    // localStorage.setItem('isSuccess', JSON.stringify(false))
-    // navigate("/login")
   }
 
   const test = () => {
@@ -72,21 +64,21 @@ function App(){
     navigate("/login")
   }
 
-  const handleRegister = (username, password, fullname, dob, email) => {
-    // setSuccess(success => !success);
+  const handleRegister = (username, password, fullname, email) => {
     axios.post(
-      "https://284f-2402-800-639a-c0b8-2460-1d2d-62c1-cbfb.ap.ngrok.io/api/Users", 
+      "http://localhost:5133/api/Users/Signup", 
       {
         "username": username,
         "password": password,
         "fullname": fullname,
-        "dob": dob,
         "email": email
       }
     )
-    .then(res => console.log(res.data))
-    localStorage.setItem('isSuccess', JSON.stringify(true))
-    navigate("home")
+    .then(res => {
+      console.log(res.data)
+      localStorage.setItem('isSuccess', JSON.stringify(true))
+      navigate("home")
+    })
   }
 
   if(!JSON.parse(localStorage.getItem('isSuccess'))){
