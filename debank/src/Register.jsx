@@ -7,17 +7,32 @@ function Register(props) {
     let navigate = useNavigate();
 
     const register = () => {
-        var username = document.querySelector("#username").value;
-        var password = document.querySelector("#password").value;
-        var fullname = document.querySelector("#fullname").value;
-        var email = document.querySelector("#email").value;
-        var dob = document.querySelector("#year").value + "-" + document.querySelector("#month").value + "-" + document.querySelector("#day").value;
-        // console.log(username);
-        // console.log(password);
-        // console.log(fullname);
-        // console.log(dob);
-        // console.log(email);
-        props.handleRegister(username, password, fullname, dob, email)
+        var username = document.querySelector("#register_user-input").value;
+        var password = document.querySelector("#register_pass-input").value;
+        var pwdConfirm = document.querySelector("#register_passConfirm-input").value;
+        var fullname = document.querySelector("#register_fullname-input").value;
+        var email = document.querySelector("#register_email-input").value;
+        
+        if(username === "" ||             // check if string is empty
+            password === "" || 
+            pwdConfirm === "" || 
+            fullname === "" || 
+            email === ""){
+            alert('Hãy nhập đầy đủ các trường bên dưới')
+        } else if(
+            !username.replace(/\s/g, '').length ||         // check if string contains only space
+            !password.replace(/\s/g, '').length || 
+            !pwdConfirm.replace(/\s/g, '').length || 
+            !fullname.replace(/\s/g, '').length || 
+            !email.replace(/\s/g, '').length){
+            alert("Phát hiện các trường đang chỉ nhập khoảng trắng, xin hãy nhập lại")
+        } else {
+            if(pwdConfirm === password){
+                alert('Xác nhận mật khẩu k trùng khớp với mật khẩu đã cho')
+            } else {
+                props.handleRegister(username, password, fullname, email)
+            }
+        }
     }
 
     return (
@@ -35,6 +50,12 @@ function Register(props) {
                 </div>
                 <div id="register_user-div">
                     <input type="text" placeholder="Tài khoản" id="register_user-input"/>
+                </div>
+                <div id="register_fullname-div">
+                    <input type="text" placeholder="Họ tên" id="register_fullname-input"/>
+                </div>
+                <div id="register_email-div">
+                    <input type="text" placeholder="Email" id="register_email-input"/>
                 </div>
                 <div id="register_pass-div">
                     <input type="password" placeholder="Mật khẩu" id="register_pass-input"/>
