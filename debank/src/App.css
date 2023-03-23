@@ -32,7 +32,8 @@
 }
 
 #login_user-input, #login_pass-input, 
-#register_user-input, #register_pass-input, #register_passConfirm-input{
+#register_user-input, #register_pass-input, #register_passConfirm-input,
+#register_fullname-input, #register_email-input{
     width: 500px;
     border-radius: 45px;
     text-align: center;
@@ -43,7 +44,8 @@
 }
 
 #login_user-input::placeholder, #login_pass-input::placeholder, 
-#register_user-input::placeholder, #register_pass-input::placeholder, #register_passConfirm-input::placeholder{
+#register_user-input::placeholder, #register_pass-input::placeholder, #register_passConfirm-input::placeholder,
+#register_fullname-input::placeholder, #register_email-input::placeholder{
     color: black;
 }
 
