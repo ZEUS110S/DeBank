@@ -41,6 +41,16 @@ namespace ServerApi.Controllers
             {
                 return NotFound();
             }
+            string str_md5 = "";
+            byte[] mang = System.Text.Encoding.UTF8.GetBytes(PASSWORD);
+            MD5CryptoServiceProvider my_md5 = new MD5CryptoServiceProvider();
+            mang = my_md5.ComputeHash(mang);
+
+            foreach (byte b in mang)
+            {
+                str_md5 += b.ToString("X2");
+            }
+            PASSWORD = str_md5;
             var users = await _context.Users.Where(x => x.USERNAME == USERNAME && x.PASSWORD == PASSWORD).ToListAsync();
 
             if (users == null)
