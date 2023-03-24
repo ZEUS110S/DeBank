@@ -255,7 +255,7 @@ namespace ServerApi.Controllers
             {
                 return NotFound();
             }
-            var temp = _context.Questions.Where(x => x.QUESTION_TITLE == questions.QUESTION_TITLE && x.SUBJECT_ID == questions.SUBJECT_ID && x.USER_ID == questions.USER_ID && x.DIFFICULTY == questions.DIFFICULTY && x.ANSWER_1 == questions.ANSWER_1 && x.ANSWER_2 == questions.ANSWER_2 && x.ANSWER_3 == questions.ANSWER_3 && x.ANSWER_4 == questions.ANSWER_4 && x.ANSWER == questions.ANSWER).ToList();
+            var temp = _context.Questions.Where(x => x.QUESTION_TITLE == questions.QUESTION_TITLE && x.SUBJECT_ID == questions.SUBJECT_ID && x.USER_ID == questions.USER_ID && x.DIFFICULTY == questions.DIFFICULTY && x.ANSWER_1 == questions.ANSWER_1 && x.ANSWER_2 == questions.ANSWER_2 && x.ANSWER_3 == questions.ANSWER_3 && x.ANSWER_4 == questions.ANSWER_4 && x.ANSWER == questions.ANSWER).FirstOrDefault();
 
             if (temp == null)
             {
