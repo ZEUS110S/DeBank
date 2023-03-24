@@ -26,7 +26,7 @@ function Header(props){
                         </div>
                     </div>
                     Welcome,&nbsp;
-                    <a href="/login" onClick={openProfileBox}>Bằng Nguyễn</a>
+                    <a href="/login" onClick={openProfileBox}>{props.name}</a>
                 </div>
             </div>
             <div id="nav-box">
