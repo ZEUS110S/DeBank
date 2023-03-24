@@ -2,14 +2,14 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-function Profile(){
+function Profile(props){
     return (
         <div id="body">
             <div id="profile-background">
             </div>
             <div id="profile-fullname">
                 <span>
-                    Bằng Nguyễn&nbsp;&nbsp;
+                    {props.name}&nbsp;&nbsp;
                     <FontAwesomeIcon size="1x" icon={faCheck} />    
                 </span>
             </div>
