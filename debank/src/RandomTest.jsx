@@ -73,8 +73,12 @@ function RandomTest(){
                         <td id="td-question">Môn</td>
                         <td id="td-question">
                             <select name="subjects" id="subjects" value={subject} onChange={subjectChange}>
+                                <option value="Math">Toán</option>
                                 <option value="Chemistry">Hoá</option>
+                                <option value="Physics">Lý</option>
                                 <option value="Biology">Sinh</option>
+                                <option value="History">Sử</option>
+                                <option value="Geography">Địa</option>
                                 <option value="English">Anh</option>
                             </select>
                         </td>

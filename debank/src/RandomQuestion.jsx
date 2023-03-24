@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
@@ -25,32 +24,18 @@ function RandomQuestion(props){
     }
 
     const submit = () => {
-        console.log(subject + " " + diff)
-
         var questionTitle = document.querySelector("#questionTitle").value;
-        var selectedSubject = subject;
-        var selectedDiff = diff;
+        var subjects = document.querySelector("#subjects").value;
+        var diffs = document.querySelector("#difficulties").value;
         var answer1 = document.querySelector("#answer1").value;
         var answer2 = document.querySelector("#answer2").value;
         var answer3 = document.querySelector("#answer3").value;
         var answer4 = document.querySelector("#answer4").value;
-        var isCorrectAnswer = isCorrect;
+        var isCorrectAnswer = document.querySelector("#isCorrect").value;
 
-        axios.post(
-            "http:/localhost:5133/api/Questions",
-            {
-                "questioN_TITLE": questionTitle,
-                "subjecT_ID": selectedSubject,
-                "useR_ID": 2,
-                "answeR_1": answer1,
-                "answeR_2": answer2,
-                "answeR_3": answer3,
-                "answeR_4": answer4,
-                "answer": isCorrectAnswer,
-                "difficulty": selectedDiff
-            }
-        )
-            .then(res => console.log(res.data))
+        console.log(subjects + " " + diffs)
+
+        props.addQuestion(questionTitle, subjects, props.userID, answer1, answer2, answer3, answer4, isCorrectAnswer, diffs)
     }
 
     return (
@@ -80,8 +65,12 @@ function RandomQuestion(props){
                         <td id="td-question">
                             <select name="subjects" id="subjects" value={subject} onChange={subjectChange}>
                                 <option value="1">Toán</option>
-                                <option value="2">Văn</option>
-                                <option value="3">Anh</option>
+                                <option value="2">Hoá</option>
+                                <option value="3">Lý</option>
+                                <option value="4">Sinh</option>
+                                <option value="5">Sử</option>
+                                <option value="6">Địa</option>
+                                <option value="7">Anh</option>
                             </select>
                         </td>
                     </tr>
@@ -133,7 +122,7 @@ function RandomQuestion(props){
                 </tbody>
             </table>
             <div style={{margin: '10px auto 0 auto', width: '50px'}}>
-                <button onClick={submit}>submit</button>
+                <button onClick={() => submit()}>submit</button>
             </div>
         </div>
     )
