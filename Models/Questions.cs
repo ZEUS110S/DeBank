@@ -42,6 +42,8 @@ namespace ServerApi.Models
         [Column(TypeName = "varchar(10)")]
         public string DIFFICULTY { get; set; }
 
+        public int GRADE { get; set; }
+
 
 
     }
