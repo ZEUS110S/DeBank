@@ -13,6 +13,7 @@ function Register(props) {
         var fullname = document.querySelector("#register_fullname-input").value;
         var email = document.querySelector("#register_email-input").value;
         
+        console.log(password + " " + pwdConfirm)
         if(username === "" ||             // check if string is empty
             password === "" || 
             pwdConfirm === "" || 
@@ -27,7 +28,7 @@ function Register(props) {
             !email.replace(/\s/g, '').length){
             alert("Phát hiện các trường đang chỉ nhập khoảng trắng, xin hãy nhập lại")
         } else {
-            if(pwdConfirm === password){
+            if(pwdConfirm !== password){
                 alert('Xác nhận mật khẩu k trùng khớp với mật khẩu đã cho')
             } else {
                 props.handleRegister(username, password, fullname, email)
