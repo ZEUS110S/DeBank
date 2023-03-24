@@ -33,7 +33,11 @@ function App(){
         // set local storage
         if(res.data.length === 0){
           localStorage.setItem('isSuccess', JSON.stringify(false))
+          alert("Không có tài khoản phù hợp với tài khoản đã nhập")
         } else {
+          localStorage.setItem('user_id', JSON.stringify(res.data[0].useR_ID))
+          localStorage.setItem('fullname', JSON.stringify(res.data[0].fullname))
+          localStorage.setItem('email', JSON.stringify(res.data[0].email))
           localStorage.setItem('isSuccess', JSON.stringify(true))
           navigate("/home")
         }
@@ -60,6 +64,9 @@ function App(){
 
   const logoutTest = (e) => {
     e.preventDefault();
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('fullname')
+    localStorage.removeItem('email')
     localStorage.setItem('isSuccess', JSON.stringify(false))
     navigate("/login")
   }
@@ -81,6 +88,36 @@ function App(){
     })
   }
 
+  const addQuestion = (questionTitle, subject, userID, answer1, answer2, answer3, answer4, answer, difficulty) => {
+    axios.post(
+      "http://localhost:5133/api/Questions",
+      {
+          "questioN_TITLE": questionTitle,
+          "subjecT_ID": subject,
+          "useR_ID": userID,
+          "answeR_1": answer1,
+          "answeR_2": answer2,
+          "answeR_3": answer3,
+          "answeR_4": answer4,
+          "answer": answer,
+          "difficulty": difficulty
+      }
+  )
+      .then(res => {
+        console.log(res.data)
+
+        // reset form
+        document.querySelector("#questionTitle").value = "";
+        document.querySelector("#subjects").value = 1;
+        document.querySelector("#difficulties").value = "easy";
+        document.querySelector("#answer1").value = "";
+        document.querySelector("#answer2").value = "";
+        document.querySelector("#answer3").value = "";
+        document.querySelector("#answer4").value = "";
+        document.querySelector("#isCorrect").value = "A";
+      })
+  }
+
   if(!JSON.parse(localStorage.getItem('isSuccess'))){
     return (
       <Routes>
@@ -93,14 +130,14 @@ function App(){
   return (
     <div style={{position: 'relative'}}>
       <div className="homepage">
-        <Header openProfileBox={openProfileBox}/>
+        <Header openProfileBox={openProfileBox} name={JSON.parse(localStorage.getItem('fullname'))}/>
             <Routes>
                 <Route path="/" element={<Navigate to="/home"/>}></Route>
                 <Route exact path="/home" element={<Home />}></Route>
                 <Route exact path="/randomTest" element={<RandomTest />}></Route>
-                <Route exact path="/randomQuestion" element={<RandomQuestion />}></Route>
+                <Route exact path="/randomQuestion" element={<RandomQuestion addQuestion={addQuestion} userID={JSON.parse(localStorage.getItem("user_id"))}/>}></Route>
                 <Route exact path="/news" element={<News />}></Route>
-                <Route exact path="/profile" element={<Profile />}></Route>
+                <Route exact path="/profile" element={<Profile name={JSON.parse(localStorage.getItem('fullname'))}/>}></Route>
             </Routes>
         <Footer />
       </div>
@@ -113,9 +150,9 @@ function App(){
               <div id="profile-info">
                 <FontAwesomeIcon size="3x" icon={faUser}/>
                 <div id="profile-id">
-                  <span id="fullname">Bằng Nguyễn</span>
+                  <span id="fullname">{JSON.parse(localStorage.getItem("fullname"))}</span>
                   <br />
-                  <span id="mail">nguyenvubang011001hiie@gmail.com</span>
+                  <span id="mail">{JSON.parse(localStorage.getItem("email"))}</span>
                 </div>
               </div>
               <hr/>
