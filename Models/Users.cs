@@ -23,11 +23,5 @@ namespace ServerApi.Models
 
         [Column(TypeName = "varchar50")]
         public string EMAIL { get; set; }
-
-        
-        
-
-        [Column(TypeName = "varchar(MAX)")]
-        public string SALT { get; set; }
     }
 }
