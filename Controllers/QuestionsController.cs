@@ -48,6 +48,7 @@ namespace ServerApi.Controllers
                         {   
                             q.QUESTION_ID,
                             q.QUESTION_TITLE,
+                            q.GRADE,
                             s.SUBJECT_NAME,
                             u.USERNAME,
                             q.DIFFICULTY,
@@ -81,6 +82,7 @@ namespace ServerApi.Controllers
                          {
                              q.QUESTION_ID,
                              q.QUESTION_TITLE,
+                             q.GRADE,
                              s.SUBJECT_NAME,
                              u.USERNAME,
                              q.DIFFICULTY,
@@ -113,6 +115,7 @@ namespace ServerApi.Controllers
                          {
                              q.QUESTION_ID,
                              q.QUESTION_TITLE,
+                             q.GRADE,
                              s.SUBJECT_NAME,
                              u.USERNAME,
                              q.DIFFICULTY,
@@ -147,6 +150,7 @@ namespace ServerApi.Controllers
                          {
                              q.QUESTION_ID,
                              q.QUESTION_TITLE,
+                             q.GRADE,
                              s.SUBJECT_NAME,
                              u.USERNAME,
                              q.DIFFICULTY,
@@ -220,6 +224,7 @@ namespace ServerApi.Controllers
                          {
                              q.QUESTION_ID,
                              q.QUESTION_TITLE,
+                             q.GRADE,
                              s.SUBJECT_NAME,
                              u.USERNAME,
                              q.DIFFICULTY,
