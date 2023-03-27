@@ -255,7 +255,7 @@ namespace ServerApi.Controllers
             {
                 return NotFound();
             }
-            var temp = _context.Questions.Where(x => x.QUESTION_TITLE == questions.QUESTION_TITLE && x.SUBJECT_ID == questions.SUBJECT_ID && x.USER_ID == questions.USER_ID && x.DIFFICULTY == questions.DIFFICULTY && x.ANSWER_1 == questions.ANSWER_1 && x.ANSWER_2 == questions.ANSWER_2 && x.ANSWER_3 == questions.ANSWER_3 && x.ANSWER_4 == questions.ANSWER_4 && x.ANSWER == questions.ANSWER).FirstOrDefault();
+            var temp = _context.Questions.Where(x => x.QUESTION_TITLE == questions.QUESTION_TITLE && x.GRADE == questions.GRADE && x.SUBJECT_ID == questions.SUBJECT_ID && x.USER_ID == questions.USER_ID && x.DIFFICULTY == questions.DIFFICULTY && x.ANSWER_1 == questions.ANSWER_1 && x.ANSWER_2 == questions.ANSWER_2 && x.ANSWER_3 == questions.ANSWER_3 && x.ANSWER_4 == questions.ANSWER_4 && x.ANSWER == questions.ANSWER).FirstOrDefault();
 
             if (temp == null)
             {
@@ -277,6 +277,7 @@ namespace ServerApi.Controllers
                 {
                     QUESTION_ID = y.QUESTION_ID,
                     QUESTION_TITLE = y.QUESTION_TITLE,
+                    GRADE = y.GRADE,
                     DIFFICULTY = y.DIFFICULTY,
                     SUBJECT_ID = y.SUBJECT_ID,
                     ANSWERS = new string[] { y.ANSWER_1, y.ANSWER_2, y.ANSWER_3, y.ANSWER_4 },
