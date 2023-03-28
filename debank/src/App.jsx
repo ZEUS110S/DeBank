@@ -1,6 +1,8 @@
 import React from "react";
 // import { useState } from "react";
 import { Routes, Route, useNavigate, Navigate, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
 import Header from './Header'
 import Footer from './Footer'
 
@@ -18,6 +20,8 @@ import Profile from "./Profile";
 
 function App(){
   let navigate = useNavigate();
+  let location = useLocation();
+  const [questionID, setQuestionID] = useState(0);
 
   const handleSubmit = (username, password) => {
     axios.post("http://localhost:5133/api/Users/Login",
@@ -36,6 +40,7 @@ function App(){
           alert("Không có tài khoản phù hợp với tài khoản đã nhập")
         } else {
           localStorage.setItem('user_id', JSON.stringify(res.data[0].useR_ID))
+          localStorage.setItem('username', JSON.stringify(res.data[0].username))
           localStorage.setItem('fullname', JSON.stringify(res.data[0].fullname))
           localStorage.setItem('email', JSON.stringify(res.data[0].email))
           localStorage.setItem('isSuccess', JSON.stringify(true))
@@ -54,7 +59,7 @@ function App(){
     }
   }
 
-  const test = () => {
+  const closeProfileBox = () => {
     document.querySelector('#profile-modal').classList.remove("animated")
     document.querySelector('#profile-modal').classList.add('reversed')
     setTimeout(() => {
@@ -62,7 +67,7 @@ function App(){
     }, 1000)
   }
 
-  const logoutTest = (e) => {
+  const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem('user_id')
     localStorage.removeItem('fullname')
@@ -88,7 +93,7 @@ function App(){
     })
   }
 
-  const addQuestion = (questionTitle, subject, userID, answer1, answer2, answer3, answer4, answer, difficulty) => {
+  const addQuestion = (questionTitle, subject, userID, answer1, answer2, answer3, answer4, answer, difficulty, grade) => {
     axios.post(
       "http://localhost:5133/api/Questions",
       {
@@ -100,7 +105,8 @@ function App(){
           "answeR_3": answer3,
           "answeR_4": answer4,
           "answer": answer,
-          "difficulty": difficulty
+          "difficulty": difficulty,
+          "grade": grade
       }
   )
       .then(res => {
@@ -115,7 +121,37 @@ function App(){
         document.querySelector("#answer3").value = "";
         document.querySelector("#answer4").value = "";
         document.querySelector("#isCorrect").value = "A";
+        document.querySelector('#grade').value = "10"
       })
+  }
+
+  const openConfirmBox = (questionID) => {
+    document.querySelector('#popup-div').style.display = 'block'
+    if(document.querySelector('#popup-modal').classList.contains("reversed2")){
+      document.querySelector('#popup-modal').classList.remove('reversed2')
+      document.querySelector('#popup-modal').classList.add('animated2')
+    } else {
+      document.querySelector('#popup-modal').classList.add('animated2')
+    }
+    setQuestionID(questionID)
+  }
+
+  const closeConfirmBox = () => {
+    document.querySelector('#popup-modal').classList.remove("animated2")
+    document.querySelector('#popup-modal').classList.add('reversed2')
+    setTimeout(() => {
+      document.querySelector('#popup-div').style.display = 'none'
+    }, 1000)
+    setQuestionID(0)
+  }
+
+  const deleteQuestion = () => {
+    axios.delete(
+        "http://localhost:5133/api/Questions/" + questionID,
+    ).then(res => {
+      console.log("success")
+      window.location.href = "/profile"
+    })
   }
 
   if(!JSON.parse(localStorage.getItem('isSuccess'))){
@@ -137,13 +173,13 @@ function App(){
                 <Route exact path="/randomTest" element={<RandomTest />}></Route>
                 <Route exact path="/randomQuestion" element={<RandomQuestion addQuestion={addQuestion} userID={JSON.parse(localStorage.getItem("user_id"))}/>}></Route>
                 <Route exact path="/news" element={<News />}></Route>
-                <Route exact path="/profile" element={<Profile name={JSON.parse(localStorage.getItem('fullname'))}/>}></Route>
+                <Route exact path="/profile" element={<Profile handleConfirm={openConfirmBox} username={JSON.parse(localStorage.getItem('username'))} name={JSON.parse(localStorage.getItem('fullname'))}/>}></Route>
             </Routes>
         <Footer />
       </div>
       <div id="profile-div">
           <div id="profile-modal">
-            <button id="closeBtn" onClick={test}>
+            <button id="closeBtn" onClick={closeProfileBox}>
               <FontAwesomeIcon size="2x" icon={faXmark} />
             </button>
             <div id="profile-info-box">
@@ -157,15 +193,26 @@ function App(){
               </div>
               <hr/>
               <div id="profile-link-div">
-                <Link to="/profile" id="profile-link" onClick={test}>Trang cá nhân</Link>
+                <Link to="/profile" id="profile-link" onClick={closeProfileBox}>Trang cá nhân</Link>
               </div>
               <hr style={{borderTop: '1px solid black'}}/>
               <div id="profile-config">
                 <a href="/settings">Cài đặt</a>
-                <a href="/login" onClick={logoutTest}>Đăng xuất</a>
+                <a href="/login" onClick={logout}>Đăng xuất</a>
               </div>
             </div>
           </div>
+      </div>
+      <div id="popup-div">
+        <div id="popup-modal">
+          <div id="popup-text">
+            <span>Bạn có chắc chắn muốn xoá bỏ câu hỏi này?</span>
+          </div>
+          <div id="popup-buttons">
+            <button id="yes-btn" onClick={deleteQuestion}>Có</button>
+            <button id="no-btn" onClick={closeConfirmBox}>Không</button>
+          </div>
+        </div>
       </div>
     </div>
   )

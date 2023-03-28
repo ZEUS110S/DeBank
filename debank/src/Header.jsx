@@ -38,7 +38,7 @@ function Header(props){
                         <Link to="/randomTest">Tạo đề thi</Link>               
                     </li>
                     <li className="nav-item">
-                        <Link to="/randomQuestion">Tạo câu hỏi</Link>               
+                        <Link to="/randomQuestion" state={{editFlg: '1'}}>Tạo câu hỏi</Link>               
                     </li>
                     <li className="nav-item">
                         <Link to="/news">Tin tức</Link>
