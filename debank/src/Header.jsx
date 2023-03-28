@@ -9,6 +9,18 @@ function Header(props){
         props.openProfileBox();
     }
 
+    const question = {
+        subjecT_NAME: "",
+        difficulty: "easy",
+        grade: 10,
+        questioN_TITLE: "",
+        answeR_1: "",
+        answeR_2: "",
+        answeR_3: "",
+        answeR_4: "",
+        answeR: ""
+    }
+
     return (
         <header id="header">
             <div id="header-top">
@@ -38,7 +50,7 @@ function Header(props){
                         <Link to="/randomTest">Tạo đề thi</Link>               
                     </li>
                     <li className="nav-item">
-                        <Link to="/randomQuestion" state={{editFlg: '1'}}>Tạo câu hỏi</Link>               
+                        <Link to="/randomQuestion" state={{editFlg: '1', question: question}}>Tạo câu hỏi</Link>               
                     </li>
                     <li className="nav-item">
                         <Link to="/news">Tin tức</Link>
