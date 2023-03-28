@@ -1,7 +1,6 @@
 import React from "react";
 // import { useState } from "react";
 import { Routes, Route, useNavigate, Navigate, Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import Header from './Header'
 import Footer from './Footer'
@@ -20,7 +19,6 @@ import Profile from "./Profile";
 
 function App(){
   let navigate = useNavigate();
-  let location = useLocation();
   const [questionID, setQuestionID] = useState(0);
 
   const handleSubmit = (username, password) => {
