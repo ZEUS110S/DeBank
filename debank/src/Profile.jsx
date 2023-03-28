@@ -1,10 +1,9 @@
-import { faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { faCheck, faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 class Profile extends React.Component{
     constructor(props){
@@ -52,7 +51,7 @@ class Profile extends React.Component{
                     </a>
                 </div>
                 <div className="history-icons">
-                    <Link to="/randomQuestion" state={{editFlg: '0'}}>
+                    <Link to="/randomQuestion" state={{editFlg: '0', question: question}}>
                         <FontAwesomeIcon size="2x" icon={faPen} style={{color: "#44ff00"}}/>    
                     </Link> 
                     <a href="/#" onClick={() => this.deleteQuestion(question.questioN_ID)} style={{marginLeft: "10px"}}>
