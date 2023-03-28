@@ -48,6 +48,7 @@ namespace ServerApi.Controllers
                         {   
                             q.QUESTION_ID,
                             q.QUESTION_TITLE,
+                            q.GRADE,
                             s.SUBJECT_NAME,
                             u.USERNAME,
                             q.DIFFICULTY,
@@ -81,6 +82,7 @@ namespace ServerApi.Controllers
                          {
                              q.QUESTION_ID,
                              q.QUESTION_TITLE,
+                             q.GRADE,
                              s.SUBJECT_NAME,
                              u.USERNAME,
                              q.DIFFICULTY,
@@ -113,6 +115,7 @@ namespace ServerApi.Controllers
                          {
                              q.QUESTION_ID,
                              q.QUESTION_TITLE,
+                             q.GRADE,
                              s.SUBJECT_NAME,
                              u.USERNAME,
                              q.DIFFICULTY,
@@ -147,6 +150,7 @@ namespace ServerApi.Controllers
                          {
                              q.QUESTION_ID,
                              q.QUESTION_TITLE,
+                             q.GRADE,
                              s.SUBJECT_NAME,
                              u.USERNAME,
                              q.DIFFICULTY,
@@ -220,6 +224,7 @@ namespace ServerApi.Controllers
                          {
                              q.QUESTION_ID,
                              q.QUESTION_TITLE,
+                             q.GRADE,
                              s.SUBJECT_NAME,
                              u.USERNAME,
                              q.DIFFICULTY,
@@ -284,6 +289,34 @@ namespace ServerApi.Controllers
                     ANSWER = y.ANSWER
                 })).ToListAsync();
             return Ok(answer);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutQuestions(int id, Questions questions)
+        {
+            if (id != questions.QUESTION_ID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(questions).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!QuestionsExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         // DELETE: api/Questions/5
