@@ -7,6 +7,7 @@ import { callAddFont } from "./calibri-normal";
 function RandomTest(){
     const [subject, setSubject] = useState("1");
     const [diff, setDiff] = useState("Dễ");
+    const [grade, setGrade] = useState("10");
 
     const subjectChange = (e) => {
         setSubject(e.target.value);
@@ -16,17 +17,23 @@ function RandomTest(){
         setDiff(e.target.value);
     }
 
+    const gradeChange = (e) => {
+        setGrade(e.target.value);
+    }
+
     const createForm = () => {
         var subject_name = document.querySelector("#subjects").value;
         var difficulty = document.querySelector("#difficulties").value;
+        var grade = document.querySelector("#grade").value;
 
         // get questions from db using API
         axios.get(
-            "http://localhost:5133/api/Questions/SUBJECT_NAME,DIFFICULTY",
+            "http://localhost:5133/api/Questions/SUBJECT_NAME,DIFFICULTY,GRADE",
             {
                 params: {
                     SUBJECT_NAME: subject_name,
-                    DIFFICULTY: difficulty
+                    DIFFICULTY: difficulty,
+                    GRADE: grade
                 },
                 headers:{
                     'Access-Control-Allow-Origin': true
@@ -93,9 +100,19 @@ function RandomTest(){
                         </select>
                         </td>
                     </tr>
+                    <tr id="tr-question">
+                        <td id="td-question">Lớp</td>
+                        <td id="td-question">
+                            <select name="grade" id="grade" value={grade} onChange={gradeChange}>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <div style={{margin: '10px auto 0 auto', width: '50px'}}>
+            <div id="submit-btn">
                 <button id="downloadPDF" onClick={() => createForm()}>submit</button>
             </div>
         </div>
