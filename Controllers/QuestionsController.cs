@@ -56,6 +56,7 @@ namespace ServerApi.Controllers
                             q.ANSWER_2,
                             q.ANSWER_3,
                             q.ANSWER_4,
+                            q.ANSWER
                         }).ToList() ;
 
             var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.DIFFICULTY == DIFFICULTY).ToList();
@@ -90,6 +91,7 @@ namespace ServerApi.Controllers
                              q.ANSWER_2,
                              q.ANSWER_3,
                              q.ANSWER_4,
+                             q.ANSWER
                          }).ToList();
 
             var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME).ToList();
@@ -123,6 +125,7 @@ namespace ServerApi.Controllers
                              q.ANSWER_2,
                              q.ANSWER_3,
                              q.ANSWER_4,
+                             q.ANSWER
                          }).ToList();
 
             var questions = query.Where(x => x.USERNAME == USERNAME).ToList();
@@ -158,6 +161,7 @@ namespace ServerApi.Controllers
                              q.ANSWER_2,
                              q.ANSWER_3,
                              q.ANSWER_4,
+                             q.ANSWER
                          }).ToList();
 
             var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.USERNAME == USERNAME).ToList();
@@ -232,6 +236,7 @@ namespace ServerApi.Controllers
                              q.ANSWER_2,
                              q.ANSWER_3,
                              q.ANSWER_4,
+                             q.ANSWER
                          }).ToList();
 
             var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.DIFFICULTY == DIFFICULTY && x.USERNAME == USERNAME).ToList();
@@ -244,7 +249,40 @@ namespace ServerApi.Controllers
             return Ok(questions);
         }
 
+        [HttpGet("SUBJECT_NAME,DIFFICULTY,GRADE")]
+        public async Task<ActionResult<Questions>> GetQuestions4(string SUBJECT_NAME, string DIFFICULTY, int GRADE)
+        {
+            if (_context.Questions == null)
+            {
+                return NotFound();
+            }
+            var query = (from q in _context.Questions
+                         join s in _context.Subjects on q.SUBJECT_ID equals s.SUBJECT_ID
+                         join u in _context.Users on q.USER_ID equals u.USER_ID
+                         select new
+                         {
+                             q.QUESTION_ID,
+                             q.QUESTION_TITLE,
+                             q.GRADE,
+                             s.SUBJECT_NAME,
+                             u.USERNAME,
+                             q.DIFFICULTY,
+                             q.ANSWER_1,
+                             q.ANSWER_2,
+                             q.ANSWER_3,
+                             q.ANSWER_4,
+                             q.ANSWER
+                         }).Take(40).ToList();
 
+            var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.DIFFICULTY == DIFFICULTY && x.GRADE == GRADE).ToList();
+
+            if (questions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(questions);
+        }
 
 
 
