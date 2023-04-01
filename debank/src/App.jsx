@@ -22,29 +22,33 @@ function App(){
   const [questionID, setQuestionID] = useState(0);
 
   const handleSubmit = (username, password) => {
-    axios.post("http://localhost:5133/api/Users/Login",
-    {},
-    {
-      params: {
-        USERNAME: username,
-        PASSWORD: password
-      }
-    })
-      .then(res => {
-        console.log(res.data)
-        // set local storage
-        if(res.data.length === 0){
-          localStorage.setItem('isSuccess', JSON.stringify(false))
-          alert("Không có tài khoản phù hợp với tài khoản đã nhập")
-        } else {
-          localStorage.setItem('user_id', JSON.stringify(res.data[0].useR_ID))
-          localStorage.setItem('username', JSON.stringify(res.data[0].username))
-          localStorage.setItem('fullname', JSON.stringify(res.data[0].fullname))
-          localStorage.setItem('email', JSON.stringify(res.data[0].email))
-          localStorage.setItem('isSuccess', JSON.stringify(true))
-          navigate("/home")
+    if(username === "" || password === "" || !username.replace(/\s/g, '').length || !password.replace(/\s/g, '').length){
+      alert('Hãy nhập đầy đủ tài khoản và mật khẩu')
+    } else {
+      axios.post("http://localhost:5133/api/Users/Login",
+      {},
+      {
+        params: {
+          USERNAME: username,
+          PASSWORD: password
         }
       })
+        .then(res => {
+          console.log(res.data)
+          // set local storage
+          if(res.data.length === 0){
+            localStorage.setItem('isSuccess', JSON.stringify(false))
+            alert("Không có tài khoản phù hợp với tài khoản đã nhập")
+          } else {
+            localStorage.setItem('user_id', JSON.stringify(res.data[0].useR_ID))
+            localStorage.setItem('username', JSON.stringify(res.data[0].username))
+            localStorage.setItem('fullname', JSON.stringify(res.data[0].fullname))
+            localStorage.setItem('email', JSON.stringify(res.data[0].email))
+            localStorage.setItem('isSuccess', JSON.stringify(true))
+            navigate("/home")
+          }
+        })
+    }
   }
 
   const openProfileBox = () => {
@@ -152,6 +156,28 @@ function App(){
     })
   }
 
+  const updateQuestion = (questionID, questionTitle, subjectID, userID, answer1, answer2, answer3, answer4, isCorrectAnswer, diffs, grade) => {
+    var updatedQuestion = {
+      "questioN_ID": questionID,
+      "questioN_TITLE": questionTitle,
+      "subjecT_ID": subjectID,
+      "useR_ID": userID,
+      "answeR_1": answer1,
+      "answeR_2": answer2,
+      "answeR_3": answer3,
+      "answeR_4": answer4,
+      "answer": isCorrectAnswer,
+      "difficulty": diffs,
+      "grade": grade
+    }
+    
+    axios.put(`http://localhost:5133/api/Questions/${questionID}`, updatedQuestion)
+      .then((res) => {
+        console.log("success")
+        window.location.href = "/profile"
+      })
+  }
+
   if(!JSON.parse(localStorage.getItem('isSuccess'))){
     return (
       <Routes>
@@ -169,7 +195,7 @@ function App(){
                 <Route path="/" element={<Navigate to="/home"/>}></Route>
                 <Route exact path="/home" element={<Home />}></Route>
                 <Route exact path="/randomTest" element={<RandomTest />}></Route>
-                <Route exact path="/randomQuestion" element={<RandomQuestion addQuestion={addQuestion} userID={JSON.parse(localStorage.getItem("user_id"))}/>}></Route>
+                <Route exact path="/randomQuestion" element={<RandomQuestion updateQuestion={updateQuestion} addQuestion={addQuestion} userID={JSON.parse(localStorage.getItem("user_id"))}/>}></Route>
                 <Route exact path="/news" element={<News />}></Route>
                 <Route exact path="/profile" element={<Profile handleConfirm={openConfirmBox} username={JSON.parse(localStorage.getItem('username'))} name={JSON.parse(localStorage.getItem('fullname'))}/>}></Route>
             </Routes>
