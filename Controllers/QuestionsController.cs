@@ -448,9 +448,9 @@ namespace ServerApi.Controllers
                              q.ANSWER_3,
                              q.ANSWER_4,
                              q.ANSWER
-                         }).Take(40);
+                         }).ToList();
 
-            var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.DIFFICULTY == DIFFICULTY && x.GRADE == GRADE).ToList();
+            var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.DIFFICULTY == DIFFICULTY && x.GRADE == GRADE).OrderBy(y => Guid.NewGuid()).Take(40).ToList();
 
             if (questions == null)
             {
