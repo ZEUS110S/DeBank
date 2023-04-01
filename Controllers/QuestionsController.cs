@@ -32,6 +32,15 @@ namespace ServerApi.Controllers
           }
             return await _context.Questions.ToListAsync();
         }
+        [HttpGet("Random40")]
+        public async Task<ActionResult<IEnumerable<Questions>>> GetQuestions6()
+        {
+            if (_context.Questions == null)
+            {
+                return NotFound();
+            }
+            return await _context.Questions.OrderBy(y => Guid.NewGuid()).Take(40).ToListAsync();
+        }
 
         // GET: api/Questions/5
         [HttpGet("SUBJECT_NAME,DIFFICULTY")]
@@ -69,8 +78,42 @@ namespace ServerApi.Controllers
             return Ok(questions);
         }
 
+        [HttpGet("SUBJECT_NAME,DIFFICULTY,Random40")]
+        public async Task<ActionResult<Questions>> GetQuestions7(string SUBJECT_NAME, string DIFFICULTY)
+        {
+            if (_context.Questions == null)
+            {
+                return NotFound();
+            }
+            var query = (from q in _context.Questions
+                         join s in _context.Subjects on q.SUBJECT_ID equals s.SUBJECT_ID
+                         join u in _context.Users on q.USER_ID equals u.USER_ID
+                         select new
+                         {
+                             q.QUESTION_ID,
+                             q.QUESTION_TITLE,
+                             q.GRADE,
+                             s.SUBJECT_NAME,
+                             u.USERNAME,
+                             q.DIFFICULTY,
+                             q.ANSWER_1,
+                             q.ANSWER_2,
+                             q.ANSWER_3,
+                             q.ANSWER_4,
+                         }).ToList();
+
+            var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.DIFFICULTY == DIFFICULTY).OrderBy(y => Guid.NewGuid()).Take(40).ToList();
+
+            if (questions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(questions);
+        }
+
         [HttpGet("SUBJECT_NAME")]
-        public async Task<ActionResult<Questions>> GetQuestions1(string SUBJECT_NAME)
+        public async Task<ActionResult<Questions>> GetQuestions(string SUBJECT_NAME)
         {
             if (_context.Questions == null)
             {
@@ -95,6 +138,40 @@ namespace ServerApi.Controllers
                          }).ToList();
 
             var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME).ToList();
+
+            if (questions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(questions);
+        }
+
+        [HttpGet("SUBJECT_NAME, Random40")]
+        public async Task<ActionResult<Questions>> GetQuestions1(string SUBJECT_NAME)
+        {
+            if (_context.Questions == null)
+            {
+                return NotFound();
+            }
+            var query = (from q in _context.Questions
+                         join s in _context.Subjects on q.SUBJECT_ID equals s.SUBJECT_ID
+                         join u in _context.Users on q.USER_ID equals u.USER_ID
+                         select new
+                         {
+                             q.QUESTION_ID,
+                             q.QUESTION_TITLE,
+                             q.GRADE,
+                             s.SUBJECT_NAME,
+                             u.USERNAME,
+                             q.DIFFICULTY,
+                             q.ANSWER_1,
+                             q.ANSWER_2,
+                             q.ANSWER_3,
+                             q.ANSWER_4,
+                         }).ToList();
+
+            var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME).OrderBy(y => Guid.NewGuid()).Take(40).ToList();
 
             if (questions == null)
             {
@@ -137,6 +214,39 @@ namespace ServerApi.Controllers
 
             return Ok(questions);
         }
+        [HttpGet("USERNAME,Random40")]
+        public async Task<ActionResult<Questions>> GetQuestions8(string USERNAME)
+        {
+            if (_context.Questions == null)
+            {
+                return NotFound();
+            }
+            var query = (from q in _context.Questions
+                         join s in _context.Subjects on q.SUBJECT_ID equals s.SUBJECT_ID
+                         join u in _context.Users on q.USER_ID equals u.USER_ID
+                         select new
+                         {
+                             q.QUESTION_ID,
+                             q.QUESTION_TITLE,
+                             q.GRADE,
+                             s.SUBJECT_NAME,
+                             u.USERNAME,
+                             q.DIFFICULTY,
+                             q.ANSWER_1,
+                             q.ANSWER_2,
+                             q.ANSWER_3,
+                             q.ANSWER_4,
+                         }).ToList();
+
+            var questions = query.Where(x => x.USERNAME == USERNAME).OrderBy(y => Guid.NewGuid()).Take(40).ToList();
+
+            if (questions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(questions);
+        }
 
 
         [HttpGet("SUBJECT_NAME,USERNAME")]
@@ -165,6 +275,39 @@ namespace ServerApi.Controllers
                          }).ToList();
 
             var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.USERNAME == USERNAME).ToList();
+
+            if (questions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(questions);
+        }
+        [HttpGet("SUBJECT_NAME,USERNAME,Random40")]
+        public async Task<ActionResult<Questions>> GetQuestions9(string SUBJECT_NAME, string USERNAME)
+        {
+            if (_context.Questions == null)
+            {
+                return NotFound();
+            }
+            var query = (from q in _context.Questions
+                         join s in _context.Subjects on q.SUBJECT_ID equals s.SUBJECT_ID
+                         join u in _context.Users on q.USER_ID equals u.USER_ID
+                         select new
+                         {
+                             q.QUESTION_ID,
+                             q.QUESTION_TITLE,
+                             q.GRADE,
+                             s.SUBJECT_NAME,
+                             u.USERNAME,
+                             q.DIFFICULTY,
+                             q.ANSWER_1,
+                             q.ANSWER_2,
+                             q.ANSWER_3,
+                             q.ANSWER_4,
+                         }).ToList();
+
+            var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.USERNAME == USERNAME).OrderBy(y => Guid.NewGuid()).Take(40).ToList();
 
             if (questions == null)
             {
@@ -240,6 +383,39 @@ namespace ServerApi.Controllers
                          }).ToList();
 
             var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.DIFFICULTY == DIFFICULTY && x.USERNAME == USERNAME).ToList();
+
+            if (questions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(questions);
+        }
+        [HttpGet("SUBJECT_NAME,DIFFICULTY,USERNAME,Random40")]
+        public async Task<ActionResult<Questions>> GetQuestions10(string SUBJECT_NAME, string DIFFICULTY, string USERNAME)
+        {
+            if (_context.Questions == null)
+            {
+                return NotFound();
+            }
+            var query = (from q in _context.Questions
+                         join s in _context.Subjects on q.SUBJECT_ID equals s.SUBJECT_ID
+                         join u in _context.Users on q.USER_ID equals u.USER_ID
+                         select new
+                         {
+                             q.QUESTION_ID,
+                             q.QUESTION_TITLE,
+                             q.GRADE,
+                             s.SUBJECT_NAME,
+                             u.USERNAME,
+                             q.DIFFICULTY,
+                             q.ANSWER_1,
+                             q.ANSWER_2,
+                             q.ANSWER_3,
+                             q.ANSWER_4,
+                         }).ToList();
+
+            var questions = query.Where(x => x.SUBJECT_NAME == SUBJECT_NAME && x.DIFFICULTY == DIFFICULTY && x.USERNAME == USERNAME).Take(40).ToList();
 
             if (questions == null)
             {
