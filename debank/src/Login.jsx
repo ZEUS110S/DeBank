@@ -27,9 +27,6 @@ function Login(props){
                 </div>
                 <button id="login_login-btn" onClick={login}>Đăng nhập</button>
                 <button id="login_reg-btn" onClick={() => navigate("/register")}>Đăng ký</button>
-                <div id="login_forget-btn">
-                    <span>Quên mật khẩu?</span>
-                </div>
             </div>
         </div>
     )
