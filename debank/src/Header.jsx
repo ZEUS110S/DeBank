@@ -9,6 +9,7 @@ function Header(props){
         props.openProfileBox();
     }
 
+    // temp
     const question = {
         subjecT_NAME: "",
         difficulty: "easy",
@@ -25,9 +26,6 @@ function Header(props){
         <header id="header">
             <div id="header-top">
                 <h2 id="title">DEBANK</h2>
-                <div id="search-box">
-                    <input id="search-bar" type="text" placeholder="&#xf002;&nbsp;Tìm kiếm"/>
-                </div>
                 <div id="user-box" style={{display: 'flex', alignItems: 'center'}}>
                     <div id="notification-icon">
                         <a href="/login" onClick={openProfileBox} id="icon">
