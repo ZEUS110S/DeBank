@@ -62,7 +62,17 @@ function RandomTest(){
                 doc.text("D. " + question.answeR_4, xA, yA + 15, {maxWidth: 190})
                 y += 35
                 yA += 35
-            }); // loop over all elements in array to add question to pdf
+                if((index + 1) % 8 === 0){
+                    if((index + 1) !== 40){
+                        doc.addPage();
+                    }
+                    x = 10;
+                    y = 10;
+
+                    yA = 20;
+                    xA = 10;
+                }
+            });
             doc.save("a4.pdf") // save and download final pdf file
         })
         .catch((err) => console.log(err))        
