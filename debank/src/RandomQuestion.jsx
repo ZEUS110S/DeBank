@@ -360,12 +360,6 @@ function RandomQuestion(props){
                 <div id="update-btn">
                     <button onClick={() => update()}>Cập nhật câu hỏi</button>
                 </div>
-                <div id="success-text">
-                    <span>Cập nhật thành công</span>
-                </div>
-                <div id="failure-text">
-                    <span>Cập nhật thất bại</span>
-                </div>
             </div>
         )
     }

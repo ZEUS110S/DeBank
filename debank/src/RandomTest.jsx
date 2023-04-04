@@ -137,12 +137,6 @@ function RandomTest(props){
             <div id="submit-btn">
                 <button id="downloadPDF" onClick={() => createForm()}>submit</button>
             </div>
-            <div id="success1-text">
-                <span>Cập nhật thành công</span>
-            </div>
-            <div id="failure1-text">
-                <span>Cập nhật thất bại</span>
-            </div>
         </div>
     )
 }
