@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-regular-svg-icons";
 
 function Header(props){
     const openProfileBox = (e) => {
@@ -27,14 +25,6 @@ function Header(props){
             <div id="header-top">
                 <h2 id="title">DEBANK</h2>
                 <div id="user-box" style={{display: 'flex', alignItems: 'center'}}>
-                    <div id="notification-icon">
-                        <a href="/login" onClick={openProfileBox} id="icon">
-                            <FontAwesomeIcon size="2x" icon={faBell}/>
-                        </a>
-                        <div id="noti-box">
-
-                        </div>
-                    </div>
                     Welcome,&nbsp;
                     <a href="/login" onClick={openProfileBox}>{props.name}</a>
                 </div>

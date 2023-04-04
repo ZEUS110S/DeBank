@@ -7,6 +7,71 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+/* notification */
+.notification-popup {
+    position: relative;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    animation: showNotification 0.5s ease-in-out forwards;
+    color: white;
+}
+
+.notification-popup.hide {
+    animation: hideNotification 0.5s ease-in-out forwards;
+}
+
+#notification-popup-container{
+    width: 30%;
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
+    overflow-x: hidden;
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    right: 0;
+}
+
+@keyframes showNotification {
+    from {
+    opacity: 0;
+    transform: translateX(100%);
+    }
+    to {
+    opacity: 1;
+    transform: translateX(0%);
+    }
+}
+
+@keyframes hideNotification {
+    from {
+    opacity: 1;
+    transform: translateX(0%);
+    }
+    to {
+    opacity: 0;
+    transform: translateX(100%);
+    }
+}
+
+.notification-popup div {
+    margin-bottom: 5px;
+}
+
+.notification-popup .title {
+    font-weight: bold;
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+
 /* login */
 #container{
     display: flex;
@@ -565,10 +630,12 @@
     font-weight: 700;
 }
 
-#success-text{
+#success-text, #failure-text,
+#success1-text, #failure1-text{
     width: 160px;
     margin: 10px auto 0 auto;
     text-align: center;
+    display: none;
 }
 
 /* profile modal */

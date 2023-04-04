@@ -23,7 +23,7 @@ function App(){
 
   const handleSubmit = (username, password) => {
     if(username === "" || password === "" || !username.replace(/\s/g, '').length || !password.replace(/\s/g, '').length){
-      alert('Hãy nhập đầy đủ tài khoản và mật khẩu')
+      showNotificationPopup('Thất bại', 'Đăng nhập thất bại', '#f76860')
     } else {
       axios.post("http://localhost:5133/api/Users/Login",
       {},
@@ -38,14 +38,17 @@ function App(){
           // set local storage
           if(res.data.length === 0){
             localStorage.setItem('isSuccess', JSON.stringify(false))
-            alert("Không có tài khoản phù hợp với tài khoản đã nhập")
+            showNotificationPopup('Thất bại', 'Đăng nhập thất bại', '#f76860')
           } else {
             localStorage.setItem('user_id', JSON.stringify(res.data[0].useR_ID))
             localStorage.setItem('username', JSON.stringify(res.data[0].username))
             localStorage.setItem('fullname', JSON.stringify(res.data[0].fullname))
             localStorage.setItem('email', JSON.stringify(res.data[0].email))
             localStorage.setItem('isSuccess', JSON.stringify(true))
-            navigate("/home")
+            showNotificationPopup('Thành công', 'Đăng nhập thành công', '#0ec47d')
+            setTimeout(() => {
+              navigate("/home")
+            }, 3000);
           }
         })
     }
@@ -91,7 +94,13 @@ function App(){
     .then(res => {
       console.log(res.data)
       localStorage.setItem('isSuccess', JSON.stringify(true))
-      navigate("home")
+      showNotificationPopup('Thành công', 'Đăng ký tài khoản thành công', '#0ec47d')
+      setTimeout(() => {
+        navigate("home")
+      }, 3000);
+    })
+    .catch((err) => {
+      showNotificationPopup('Thất bại', 'Đăng ký tài khoản thất bại', '#f76860')
     })
   }
 
@@ -113,7 +122,7 @@ function App(){
   )
       .then(res => {
         console.log(res.data)
-
+        showNotificationPopup('Thành công', 'Tạo câu hỏi thành công', '#0ec47d')
         // reset form
         document.querySelector("#questionTitle").value = "";
         document.querySelector("#subjects").value = 1;
@@ -124,6 +133,9 @@ function App(){
         document.querySelector("#answer4").value = "";
         document.querySelector("#isCorrect").value = "A";
         document.querySelector('#grade').value = "10"
+      })
+      .catch((err) => {
+        showNotificationPopup('Thất bại', 'Tạo câu hỏi thất bại', '#f76860')
       })
   }
 
@@ -152,7 +164,11 @@ function App(){
         "http://localhost:5133/api/Questions/" + questionID,
     ).then(res => {
       console.log("success")
+      showNotificationPopup('Thành công', 'Xoá câu hỏi thành công', '#0ec47d')
       window.location.href = "/profile"
+    })
+    .catch((err) => {
+      showNotificationPopup('Thất bại', 'Xoá câu hỏi thất bại', '#f76860')
     })
   }
 
@@ -173,29 +189,69 @@ function App(){
     
     axios.put(`http://localhost:5133/api/Questions/${questionID}`, updatedQuestion)
       .then((res) => {
-        console.log("success")
-        window.location.href = "/profile"
+        showNotificationPopup('Thành công', 'Cập nhật câu hỏi thành công', '#0ec47d')
       })
+      .catch((err) => {
+        showNotificationPopup('Thất bại', 'Cập nhật câu hỏi thất bại', '#f76860')
+      })
+  }
+
+  const showNotificationPopup = (title, message, color) => {
+    const container = document.getElementById('notification-popup-container');
+    const notification = document.createElement('div');
+    const titleEl = document.createElement('div');
+    const messageEl = document.createElement('div');
+    const closeBtn = document.createElement('span');
+
+    notification.classList.add('notification-popup');
+    notification.style.backgroundColor = color
+    titleEl.classList.add('title');
+    titleEl.textContent = title;
+    messageEl.classList.add('message')
+    messageEl.textContent = message;
+    notification.appendChild(titleEl);
+    notification.appendChild(closeBtn)
+    notification.appendChild(messageEl);
+    container.appendChild(notification);
+    closeBtn.classList.add('close-btn');
+    closeBtn.textContent = 'x';
+    closeBtn.addEventListener('click', () => {
+        notification.classList.add('hide');
+        setTimeout(() => {
+            container.removeChild(notification);
+        }, 500);
+    });
+
+    setTimeout(() => {
+        notification.classList.add('hide');
+        setTimeout(() => {
+            container.removeChild(notification);
+        }, 500); // Remove after hide animation completes
+    }, 2000); // Hide after 5 seconds
   }
 
   if(!JSON.parse(localStorage.getItem('isSuccess'))){
     return (
-      <Routes>
-        <Route path="/" element={<Navigate to="/login"/>}></Route>
-        <Route path="/login" element={<Login handleLogin={handleSubmit}/>}></Route>
-        <Route path="/register" element={<Register handleRegister={handleRegister}/>}></Route>
-      </Routes>
+      <div>
+        <div id="notification-popup-container"></div>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login"/>}></Route>
+          <Route path="/login" element={<Login handleLogin={handleSubmit}/>}></Route>
+          <Route path="/register" element={<Register handleRegister={handleRegister} showNotificationPopup={showNotificationPopup}/>}></Route>
+        </Routes>
+      </div>
     )
   }
   return (
-    <div style={{position: 'relative'}}>
+    <div>
       <div className="homepage">
+      <div id="notification-popup-container"></div>
         <Header openProfileBox={openProfileBox} name={JSON.parse(localStorage.getItem('fullname'))}/>
             <Routes>
                 <Route path="/" element={<Navigate to="/home"/>}></Route>
                 <Route exact path="/home" element={<Home />}></Route>
-                <Route exact path="/randomTest" element={<RandomTest />}></Route>
-                <Route exact path="/randomQuestion" element={<RandomQuestion updateQuestion={updateQuestion} addQuestion={addQuestion} userID={JSON.parse(localStorage.getItem("user_id"))}/>}></Route>
+                <Route exact path="/randomTest" element={<RandomTest showNotificationPopup={showNotificationPopup}/>}></Route>
+                <Route exact path="/randomQuestion" element={<RandomQuestion showNotificationPopup={showNotificationPopup} updateQuestion={updateQuestion} addQuestion={addQuestion} userID={JSON.parse(localStorage.getItem("user_id"))}/>}></Route>
                 <Route exact path="/news" element={<News />}></Route>
                 <Route exact path="/profile" element={<Profile handleConfirm={openConfirmBox} username={JSON.parse(localStorage.getItem('username'))} name={JSON.parse(localStorage.getItem('fullname'))}/>}></Route>
             </Routes>

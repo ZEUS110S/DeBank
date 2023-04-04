@@ -120,7 +120,7 @@ function RandomQuestion(props){
            !answer2.replace(/\s/g, '').length ||
            !answer3.replace(/\s/g, '').length ||
            !answer4.replace(/\s/g, '').length){
-            alert("Hãy nhập đầy đủ các trường")
+            props.showNotificationPopup('Thất bại', 'Các trường không được trống', '#f76860')
         } else {
             console.log(subjects + " " + diffs)
             props.addQuestion(questionTitle, subjects, props.userID, answer1, answer2, answer3, answer4, isCorrectAnswer, diffs, grade)
@@ -151,7 +151,7 @@ function RandomQuestion(props){
            !answer2.replace(/\s/g, '').length ||
            !answer3.replace(/\s/g, '').length ||
            !answer4.replace(/\s/g, '').length){
-            alert("Hãy nhập đầy đủ các trường")
+            props.showNotificationPopup('Thất bại', 'Các trường không được trống', '#f76860')
         } else {
             switch(subjects){
                 case "Math":
@@ -362,6 +362,9 @@ function RandomQuestion(props){
                 </div>
                 <div id="success-text">
                     <span>Cập nhật thành công</span>
+                </div>
+                <div id="failure-text">
+                    <span>Cập nhật thất bại</span>
                 </div>
             </div>
         )

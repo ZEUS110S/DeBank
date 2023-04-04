@@ -19,17 +19,17 @@ function Register(props) {
             pwdConfirm === "" || 
             fullname === "" || 
             email === ""){
-            alert('Hãy nhập đầy đủ các trường bên dưới')
+            props.showNotificationPopup('Thất bại', 'Các trường không được trống', '#f76860')
         } else if(
             !username.replace(/\s/g, '').length ||         // check if string contains only space
             !password.replace(/\s/g, '').length || 
             !pwdConfirm.replace(/\s/g, '').length || 
             !fullname.replace(/\s/g, '').length || 
             !email.replace(/\s/g, '').length){
-            alert("Phát hiện các trường đang chỉ nhập khoảng trắng, xin hãy nhập lại")
+            props.showNotificationPopup('Thất bại', 'Phải có đầy đủ thông tin', '#f76860')
         } else {
             if(pwdConfirm !== password){
-                alert('Xác nhận mật khẩu k trùng khớp với mật khẩu đã cho')
+                props.showNotificationPopup('Thất bại', 'Mật khẩu không trùng khớp', '#f76860')
             } else {
                 props.handleRegister(username, password, fullname, email)
             }

@@ -43,6 +43,7 @@ class Profile extends React.Component{
     }
 
     render() {
+        window.scrollTo(0,0)
         let question = this.state.questions.map((question) => (
             <div className="history-item-wrapper" key={question.questioN_ID}>
                 <div className="history-title">
@@ -77,7 +78,7 @@ class Profile extends React.Component{
                     <span>Tham gia từ tháng 2, 2023</span>
                 </div>
                 <div id="news-header" style={{marginTop: "15px"}}>
-                    <h2>Lịch sử</h2>
+                    <h2>Các câu hỏi đã tạo</h2>
                     <hr style={{zIndex: -999}}/>  
                 </div>
                 {question}
