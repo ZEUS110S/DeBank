@@ -21,9 +21,10 @@ function App(){
   let navigate = useNavigate();
   const [questionID, setQuestionID] = useState(0);
 
+  // handle login
   const handleSubmit = (username, password) => {
     if(username === "" || password === "" || !username.replace(/\s/g, '').length || !password.replace(/\s/g, '').length){
-      showNotificationPopup('Thất bại', 'Đăng nhập thất bại', '#f76860')
+      showNotificationPopup('Cảnh báo', 'Các trường không được trống', '#ffc107')
     } else {
       axios.post("http://localhost:5133/api/Users/Login",
       {},
@@ -54,6 +55,7 @@ function App(){
     }
   }
 
+  // show profile popup
   const openProfileBox = () => {
     document.querySelector('#profile-div').style.display = 'block'
     if(document.querySelector('#profile-modal').classList.contains("reversed")){
@@ -64,6 +66,7 @@ function App(){
     }
   }
 
+  // close profile popup
   const closeProfileBox = () => {
     document.querySelector('#profile-modal').classList.remove("animated")
     document.querySelector('#profile-modal').classList.add('reversed')
@@ -72,6 +75,7 @@ function App(){
     }, 1000)
   }
 
+  // handle logout
   const logout = (e) => {
     e.preventDefault();
     localStorage.removeItem('user_id')
@@ -81,6 +85,7 @@ function App(){
     navigate("/login")
   }
 
+  // handle register account
   const handleRegister = (username, password, fullname, email) => {
     axios.post(
       "http://localhost:5133/api/Users/Signup", 
@@ -93,6 +98,10 @@ function App(){
     )
     .then(res => {
       console.log(res.data)
+      localStorage.setItem('user_id', JSON.stringify(res.data.useR_ID))
+      localStorage.setItem('username', JSON.stringify(res.data.username))
+      localStorage.setItem('fullname', JSON.stringify(res.data.fullname))
+      localStorage.setItem('email', JSON.stringify(res.data.email))
       localStorage.setItem('isSuccess', JSON.stringify(true))
       showNotificationPopup('Thành công', 'Đăng ký tài khoản thành công', '#0ec47d')
       setTimeout(() => {
@@ -104,6 +113,7 @@ function App(){
     })
   }
 
+  // add question
   const addQuestion = (questionTitle, subject, userID, answer1, answer2, answer3, answer4, answer, difficulty, grade) => {
     axios.post(
       "http://localhost:5133/api/Questions",
@@ -139,6 +149,7 @@ function App(){
       })
   }
 
+  // show confirm delete
   const openConfirmBox = (questionID) => {
     document.querySelector('#popup-div').style.display = 'block'
     if(document.querySelector('#popup-modal').classList.contains("reversed2")){
@@ -150,6 +161,7 @@ function App(){
     setQuestionID(questionID)
   }
 
+  // close confirm delete
   const closeConfirmBox = () => {
     document.querySelector('#popup-modal').classList.remove("animated2")
     document.querySelector('#popup-modal').classList.add('reversed2')
@@ -159,19 +171,23 @@ function App(){
     setQuestionID(0)
   }
 
+  // delete question
   const deleteQuestion = () => {
     axios.delete(
         "http://localhost:5133/api/Questions/" + questionID,
     ).then(res => {
       console.log("success")
       showNotificationPopup('Thành công', 'Xoá câu hỏi thành công', '#0ec47d')
-      window.location.href = "/profile"
+      setTimeout(() => {
+        window.location.href = "/profile"
+      }, 2000);
     })
     .catch((err) => {
       showNotificationPopup('Thất bại', 'Xoá câu hỏi thất bại', '#f76860')
     })
   }
 
+  // update question
   const updateQuestion = (questionID, questionTitle, subjectID, userID, answer1, answer2, answer3, answer4, isCorrectAnswer, diffs, grade) => {
     var updatedQuestion = {
       "questioN_ID": questionID,
@@ -196,6 +212,7 @@ function App(){
       })
   }
 
+  // show notification popup
   const showNotificationPopup = (title, message, color) => {
     const container = document.getElementById('notification-popup-container');
     const notification = document.createElement('div');
@@ -230,6 +247,7 @@ function App(){
     }, 2000); // Hide after 5 seconds
   }
 
+  // render component
   if(!JSON.parse(localStorage.getItem('isSuccess'))){
     return (
       <div>
@@ -277,7 +295,6 @@ function App(){
               </div>
               <hr style={{borderTop: '1px solid black'}}/>
               <div id="profile-config">
-                <a href="/settings">Cài đặt</a>
                 <a href="/login" onClick={logout}>Đăng xuất</a>
               </div>
             </div>
