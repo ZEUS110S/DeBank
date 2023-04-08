@@ -19,17 +19,17 @@ function Register(props) {
             pwdConfirm === "" || 
             fullname === "" || 
             email === ""){
-            props.showNotificationPopup('Thất bại', 'Các trường không được trống', '#f76860')
+            props.showNotificationPopup('Cảnh báo', 'Các trường không được trống', '#ffc107')
         } else if(
             !username.replace(/\s/g, '').length ||         // check if string contains only space
             !password.replace(/\s/g, '').length || 
             !pwdConfirm.replace(/\s/g, '').length || 
             !fullname.replace(/\s/g, '').length || 
             !email.replace(/\s/g, '').length){
-            props.showNotificationPopup('Thất bại', 'Phải có đầy đủ thông tin', '#f76860')
+            props.showNotificationPopup('Cảnh báo', 'Phải có đầy đủ thông tin', '#ffc107')
         } else {
             if(pwdConfirm !== password){
-                props.showNotificationPopup('Thất bại', 'Mật khẩu không trùng khớp', '#f76860')
+                props.showNotificationPopup('Cảnh báo', 'Mật khẩu không trùng khớp', '#ffc107')
             } else {
                 props.handleRegister(username, password, fullname, email)
             }
