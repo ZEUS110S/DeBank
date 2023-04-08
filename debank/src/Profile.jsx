@@ -43,24 +43,41 @@ class Profile extends React.Component{
     }
 
     render() {
-        window.scrollTo(0,0)
-        let question = this.state.questions.map((question) => (
-            <div className="history-item-wrapper" key={question.questioN_ID}>
-                <div className="history-title">
-                    <a href="/profile">
-                        <span>{question.questioN_TITLE}</span>
-                    </a>
+        var question;
+        // temp
+        const temp = {
+            subjecT_NAME: "",
+            difficulty: "easy",
+            grade: 10,
+            questioN_TITLE: "",
+            answeR_1: "",
+            answeR_2: "",
+            answeR_3: "",
+            answeR_4: "",
+            answeR: ""
+        }
+
+        if(this.state.questions.length === 0){
+            question = <div id="no-question">Bạn chưa tạo câu hỏi nào</div>
+        } else {
+            question = this.state.questions.map((question) => (
+                <div className="history-item-wrapper" key={question.questioN_ID}>
+                    <div className="history-title">
+                        <a href="/profile">
+                            <span>{question.questioN_TITLE}</span>
+                        </a>
+                    </div>
+                    <div className="history-icons">
+                        <Link to="/randomQuestion" state={{editFlg: '0', question: question}}>
+                            <FontAwesomeIcon size="2x" icon={faPen} style={{color: "#44ff00"}}/>    
+                        </Link> 
+                        <a href="/#" onClick={() => this.deleteQuestion(question.questioN_ID)} style={{marginLeft: "10px"}}>
+                            <FontAwesomeIcon size="2x" icon={faCircleXmark} style={{color: "#ec0909"}}/>
+                        </a>
+                    </div>
                 </div>
-                <div className="history-icons">
-                    <Link to="/randomQuestion" state={{editFlg: '0', question: question}}>
-                        <FontAwesomeIcon size="2x" icon={faPen} style={{color: "#44ff00"}}/>    
-                    </Link> 
-                    <a href="/#" onClick={() => this.deleteQuestion(question.questioN_ID)} style={{marginLeft: "10px"}}>
-                        <FontAwesomeIcon size="2x" icon={faCircleXmark} style={{color: "#ec0909"}}/>
-                    </a>
-                </div>
-            </div>
-        ))
+            ))
+        }
 
         return (
             <div id="body">
@@ -77,8 +94,14 @@ class Profile extends React.Component{
                     <br/>
                     <span>Tham gia từ tháng 2, 2023</span>
                 </div>
-                <div id="news-header" style={{marginTop: "15px"}}>
-                    <h2>Các câu hỏi đã tạo</h2>
+                <div id="profile-title" style={{marginTop: "15px"}}>
+                    <div id="profile-func">
+                        <h2>Các câu hỏi đã tạo</h2>
+                        <div id="profile-func-item">
+                            <a href="/profile">Tải lại</a>
+                            <Link to="/randomQuestion" state={{editFlg: '1', question: temp}}>Tạo mới</Link>
+                        </div>
+                    </div>
                     <hr style={{zIndex: -999}}/>  
                 </div>
                 {question}
