@@ -120,7 +120,7 @@ function RandomQuestion(props){
            !answer2.replace(/\s/g, '').length ||
            !answer3.replace(/\s/g, '').length ||
            !answer4.replace(/\s/g, '').length){
-            props.showNotificationPopup('Thất bại', 'Các trường không được trống', '#f76860')
+            props.showNotificationPopup('Cảnh báo', 'Các trường không được trống', '#ffc107')
         } else {
             console.log(subjects + " " + diffs)
             props.addQuestion(questionTitle, subjects, props.userID, answer1, answer2, answer3, answer4, isCorrectAnswer, diffs, grade)
@@ -151,7 +151,7 @@ function RandomQuestion(props){
            !answer2.replace(/\s/g, '').length ||
            !answer3.replace(/\s/g, '').length ||
            !answer4.replace(/\s/g, '').length){
-            props.showNotificationPopup('Thất bại', 'Các trường không được trống', '#f76860')
+            props.showNotificationPopup('Cảnh báo', 'Các trường không được trống', '#ffc107')
         } else {
             switch(subjects){
                 case "Math":
